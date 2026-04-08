@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>meshsimple</Name>
+  <Repository>ghcr.io/pross/meshsimple:latest</Repository>
+  <Registry>https://ghcr.io</Registry>
+  <Network>bridge</Network>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/Pross/meshsimple/issues</Support>
+  <Project>https://github.com/Pross/meshsimple</Project>
+  <Overview>Self-hosted Meshtastic monitoring app. Displays a live map of all mesh nodes, a node list, and persistent channel 0 messaging (send and receive). Connects to your Meshtastic device over TCP/WiFi.</Overview>
+  <Category>Network:Management</Category>
+  <WebUI>http://[IP]:[PORT:8080]/</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/Pross/unraid-templates/main/meshsimple.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/Pross/meshsimple/main/frontend/public/favicon.svg</Icon>
+  <Config Name="Web UI Port" Target="8080" Default="8080" Mode="tcp" Description="Port to access the meshsimple web interface." Type="Port" Display="always" Required="true" Mask="false">8080</Config>
+  <Config Name="Meshtastic Host" Target="MESHTASTIC_HOST" Default="" Mode="" Description="IP address or hostname of your Meshtastic device (e.g. 192.168.1.79)." Type="Variable" Display="always" Required="true" Mask="false"></Config>
+  <Config Name="Meshtastic Port" Target="MESHTASTIC_PORT" Default="4403" Mode="" Description="TCP port of your Meshtastic device. Default is 4403." Type="Variable" Display="always" Required="false" Mask="false">4403</Config>
+  <Config Name="Data Directory" Target="/app/data" Default="/mnt/user/appdata/meshsimple" Mode="rw" Description="Persistent storage for the SQLite database." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/meshsimple</Config>
+</Container>
