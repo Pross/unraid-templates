@@ -12,7 +12,7 @@
   <Category>Network:Management</Category>
   <WebUI>http://[IP]:[PORT:8080]/</WebUI>
   <TemplateURL>https://raw.githubusercontent.com/Pross/unraid-templates/main/meshsimple.xml</TemplateURL>
-  <Icon>https://raw.githubusercontent.com/Pross/meshsimple/main/frontend/public/favicon.svg</Icon>
+  <Icon>https://raw.githubusercontent.com/Pross/meshsimple/main/frontend/public/icon.png</Icon>
   <Config Name="Web UI Port" Target="8080" Default="8080" Mode="tcp" Description="Port to access the meshsimple web interface." Type="Port" Display="always" Required="true" Mask="false">8080</Config>
   <Config Name="Meshtastic Host" Target="MESHTASTIC_HOST" Default="" Mode="" Description="IP address or hostname of your Meshtastic device (e.g. 192.168.1.79)." Type="Variable" Display="always" Required="true" Mask="false"></Config>
   <Config Name="Meshtastic Port" Target="MESHTASTIC_PORT" Default="4403" Mode="" Description="TCP port of your Meshtastic device. Default is 4403." Type="Variable" Display="always" Required="false" Mask="false">4403</Config>
