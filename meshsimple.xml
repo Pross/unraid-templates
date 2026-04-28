@@ -19,6 +19,9 @@
   <Config Name="Data Directory" Target="/app/data" Default="/mnt/user/appdata/meshsimple" Mode="rw" Description="Persistent storage for the SQLite database." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/meshsimple</Config>
   <Config Name="Reaction Emojis" Target="REACTION_EMOJIS" Default="" Mode="" Description="Comma-separated list of emojis available for message reactions (e.g. 👍,👎,❤️,😂,😮). Defaults to 5 emojis if not set." Type="Variable" Display="advanced" Required="false" Mask="false"></Config>
   <Changes>
+### 2026-04-28
+- Fix REACTION_EMOJIS env var being ignored
+
 ### 2026-04-20
 - Add reply-to: click any message to quote it in your reply
 - Add emoji reactions with configurable emoji set via REACTION_EMOJIS variable
