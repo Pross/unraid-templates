@@ -19,6 +19,12 @@
   <Config Name="Data Directory" Target="/app/data" Default="/mnt/user/appdata/meshsimple" Mode="rw" Description="Persistent storage for the SQLite database." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/meshsimple</Config>
   <Config Name="Reaction Emojis" Target="REACTION_EMOJIS" Default="" Mode="" Description="Comma-separated list of emojis available for message reactions (e.g. 👍,👎,❤️,😂,😮). Defaults to 5 emojis if not set." Type="Variable" Display="advanced" Required="false" Mask="false"></Config>
   <Changes>
+### 2026-08-22
+- Add firmware version display on your node, with an indicator when an update is available
+- Add one-click WiFi firmware update (requires device firmware 2.7.18 or newer)
+- Fix app becoming slow/unresponsive for a while after startup
+- Fix app not automatically reconnecting after the device disconnects
+
 ### 2026-05-05
 - Show received timestamp alongside hop count in message sender hover tooltip
 - Use over-the-air receive time (rxTime) for more accurate message timestamps
