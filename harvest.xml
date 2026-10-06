@@ -5,13 +5,35 @@
   <Registry>https://ghcr.io</Registry>
   <Network>bridge</Network>
   <Shell>bash</Shell>
+  <MyIP/>
   <Privileged>false</Privileged>
   <Support>https://github.com/Pross/harvest/issues</Support>
   <Project>https://github.com/Pross/harvest</Project>
-  <Overview>Self-hosted seedbox to homelab sync. Pulls files from FTP/FTPS/SFTP servers to local folders on a schedule with a ledger so deleted files are never re-downloaded. Phase 1 core: settle check, staging+atomic rename, filters, cron/interval/manual scheduling, live dashboard, builtin auth. Phase 2: webhooks with job-scoped API tokens (qBittorrent/rTorrent/Deluge snippets included), post-sync actions (delete after N days, move), dry-run mode, time-of-day bandwidth profiles, archive extraction (zip/7z/RAR), Sonarr/Radarr scan triggers with path mapping, notifications (ntfy/Discord/Telegram/Pushover/webhook). SFTP host-key pinning, resume/checkpoints, parallel byte ranges, per-job settings, atomic ledger.</Overview>
-  <Category>Network:Management Tools:Downloaders</Category>
+  <Overview>Self-hosted seedbox to homelab sync. Pulls finished downloads from your seedbox over SFTP, FTP or FTPS to local folders on a schedule, verifies them, and keeps a ledger so a file you delete locally is never downloaded again.</Overview>
+  <Description>**Harvest** pulls finished downloads from a seedbox to your Unraid server and gets them ready for Sonarr, Radarr and Plex.
+
+- **Safe to automate.** A settle check waits for files to stop changing, downloads go to a staging folder and are renamed into place atomically, so nothing sees a half-written file.
+- **Ledger.** Every synced file is recorded, so deleting a file locally never causes a re-download.
+- **Fast and resumable.** Parallel byte ranges, checkpointed resume after a crash or restart, bandwidth limits with time-of-day profiles.
+- **After sync.** Keep, delete, delete after N days, or move the remote file, only after the local copy is verified. Optional archive extraction (zip, 7z, RAR).
+- **Hooks and notifications.** Webhooks with per-job tokens for qBittorrent, rTorrent and Deluge, Sonarr/Radarr scan triggers, and ntfy, Discord, Telegram, Pushover or webhook notifications.
+- **Dry run and mirror mode.** Preview any run without changing anything. Mirror mode can also delete local files that left the remote, but only files Harvest placed, and only after a reviewed dry run.
+- **Live dashboard** with built-in login, plus optional Prometheus metrics.
+
+**Setup:** set an App Secret (`openssl rand -hex 32`, and keep it) plus an admin user and password, map one or more download folders under `/data/&lt;name>`, then open the Web UI and add a host and a job. Each target must be a single mount so staging and the final folder share a filesystem.
+
+Source, docs and issues: https://github.com/Pross/harvest</Description>
+  <Category>Downloaders: Network:FTP</Category>
   <WebUI>http://[IP]:[PORT:8099]/</WebUI>
   <TemplateURL>https://raw.githubusercontent.com/Pross/unraid-templates/main/harvest.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/Pross/harvest/main/docs/icon.png</Icon>
+  <Screenshot>https://raw.githubusercontent.com/Pross/harvest/main/docs/screenshots/dashboard.png</Screenshot>
+  <Screenshot>https://raw.githubusercontent.com/Pross/harvest/main/docs/screenshots/jobs.png</Screenshot>
+  <Screenshot>https://raw.githubusercontent.com/Pross/harvest/main/docs/screenshots/job-detail.png</Screenshot>
+  <Screenshot>https://raw.githubusercontent.com/Pross/harvest/main/docs/screenshots/mirror-dry-run.png</Screenshot>
+  <License>MIT</License>
+  <ExtraSearchTerms>seedbox sftp ftp ftps rclone sync download sonarr radarr plex qbittorrent rtorrent deluge</ExtraSearchTerms>
+  <Date>2026-10-06</Date>
   <Config Name="Web UI Port" Target="8099" Default="8099" Mode="tcp" Description="Port to access the Harvest web interface." Type="Port" Display="always" Required="true" Mask="false">8099</Config>
   <Config Name="Config Directory" Target="/config" Default="/mnt/user/appdata/harvest" Mode="rw" Description="Persistent storage: SQLite database (db/), temporary files (tmp/), and logs." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/harvest</Config>
   <Config Name="Target Directory" Target="/data/downloads" Default="/mnt/user/downloads" Mode="rw" Description="Example download target. Map any number of additional paths under /data/&lt;name&gt; (e.g., -e /data/tv:/mnt/user/tv). Staging (.harvest-staging) is created inside each target, so staging and destination must be on the same mount. Never map a target such that staging and final path cross filesystems." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/downloads</Config>
@@ -37,4 +59,14 @@
   <Config Name="Checkpoint Bytes" Target="CHECKPOINT_BYTES" Default="16777216" Mode="" Description="Fsync and checkpoint progress every N bytes per range (16 MB default). A crash loses at most this much progress." Type="Variable" Display="advanced" Required="false" Mask="false">16777216</Config>
   <Config Name="Browse Roots" Target="BROWSE_ROOTS" Default="/data" Mode="" Description="Comma-separated container paths exposed in the local folder browser (e.g., /data,/media)." Type="Variable" Display="advanced" Required="false" Mask="false">/data</Config>
   <Config Name="rclone Binary Path" Target="RCLONE_BIN" Default="rclone" Mode="" Description="Path to the rclone binary. The Docker image includes it at /usr/local/bin/rclone." Type="Variable" Display="advanced" Required="false" Mask="false">rclone</Config>
+  <Changes>
+### 2026-10-06
+- Add METRICS_ENABLED to serve Prometheus metrics at /metrics (off by default, no login when on)
+- Mirror mode is available per job: it deletes only files Harvest placed, after a reviewed dry run
+- App now runs on Node 26; add an icon and screenshots to this listing
+- Fix the category and add a full description
+
+### 2026-10-05
+- Initial release
+  </Changes>
 </Container>
