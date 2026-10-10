@@ -60,6 +60,9 @@ Source, docs and issues: https://github.com/Pross/harvest</Description>
   <Config Name="Browse Roots" Target="BROWSE_ROOTS" Default="/data" Mode="" Description="Comma-separated container paths exposed in the local folder browser (e.g., /data,/media)." Type="Variable" Display="advanced" Required="false" Mask="false">/data</Config>
   <Config Name="rclone Binary Path" Target="RCLONE_BIN" Default="rclone" Mode="" Description="Path to the rclone binary. The Docker image includes it at /usr/local/bin/rclone." Type="Variable" Display="advanced" Required="false" Mask="false">rclone</Config>
   <Changes>
+### 2026-10-10
+- Fix a memory leak where every downloaded byte was also kept in RAM, so the container could grow to several GB and stay there after downloads finished
+
 ### 2026-10-06
 - Add METRICS_ENABLED to serve Prometheus metrics at /metrics (off by default, no login when on)
 - Mirror mode is available per job: it deletes only files Harvest placed, after a reviewed dry run
