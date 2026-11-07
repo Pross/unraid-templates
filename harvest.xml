@@ -33,7 +33,7 @@ Source, docs and issues: https://github.com/Pross/harvest</Description>
   <Screenshot>https://raw.githubusercontent.com/Pross/harvest/main/docs/screenshots/mirror-dry-run.png</Screenshot>
   <License>MIT</License>
   <ExtraSearchTerms>seedbox sftp ftp ftps rclone sync download sonarr radarr plex qbittorrent rtorrent deluge</ExtraSearchTerms>
-  <Date>2026-10-06</Date>
+  <Date>2026-11-07</Date>
   <Config Name="Web UI Port" Target="8099" Default="8099" Mode="tcp" Description="Port to access the Harvest web interface." Type="Port" Display="always" Required="true" Mask="false">8099</Config>
   <Config Name="Config Directory" Target="/config" Default="/mnt/user/appdata/harvest" Mode="rw" Description="Persistent storage: SQLite database (db/), temporary files (tmp/), and logs." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/harvest</Config>
   <Config Name="Target Directory" Target="/data/downloads" Default="/mnt/user/downloads" Mode="rw" Description="Example download target. Map any number of additional paths under /data/&lt;name&gt; (e.g., -e /data/tv:/mnt/user/tv). Staging (.harvest-staging) is created inside each target, so staging and destination must be on the same mount. Never map a target such that staging and final path cross filesystems." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/downloads</Config>
@@ -60,6 +60,13 @@ Source, docs and issues: https://github.com/Pross/harvest</Description>
   <Config Name="Browse Roots" Target="BROWSE_ROOTS" Default="/data" Mode="" Description="Comma-separated container paths exposed in the local folder browser (e.g., /data,/media)." Type="Variable" Display="advanced" Required="false" Mask="false">/data</Config>
   <Config Name="rclone Binary Path" Target="RCLONE_BIN" Default="rclone" Mode="" Description="Path to the rclone binary. The Docker image includes it at /usr/local/bin/rclone." Type="Variable" Display="advanced" Required="false" Mask="false">rclone</Config>
   <Changes>
+### 2026-11-07
+- Mirror mode now deletes a local file only after it was missing from the remote on two real runs in a row, so one truncated FTP listing can no longer empty a folder
+- New post action: write a title .nfo next to each video (Jellyfin, Emby, Kodi), made from the filename; off by default
+- Editing a host's address, port, username or certificate setting now asks for the password again
+- A "change-me" sample ADMIN_PASS no longer creates the admin user, and a sample APP_SECRET logs an error
+- Safer defaults: very large listings fail cleanly, patterns with many wildcards are rejected, more secrets are redacted from logs, images are pinned by digest
+
 ### 2026-10-10
 - Fix a memory leak where every downloaded byte was also kept in RAM, so the container could grow to several GB and stay there after downloads finished
 
